@@ -3,7 +3,6 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 import pandas as pd
 
-# Conexão com o Cassandra
 CASSANDRA_HOSTS = ["host.docker.internal"]
 KEYSPACE = "banco_cassandra"
 USERNAME = "cassandra"
@@ -16,7 +15,6 @@ session = cluster.connect(KEYSPACE)
 st.set_page_config(page_title="Consulta Alunos", layout="wide")
 st.title("🔎 Consulta de Alunos - IF976")
 
-# Campos de busca
 busca_nome = st.text_input("Buscar por nome")
 busca_matricula = st.text_input("Buscar por matrícula")
 busca_status = st.selectbox("Status", ["", "Aprovado", "Reprovado"])
@@ -37,7 +35,6 @@ with col5:
 with col6:
     busca_seminario = st.number_input("Nota Seminário", min_value=0.0, max_value=10.0, step=0.1)
 
-# Consulta completa
 query = "SELECT * FROM IF976 ALLOW FILTERING"
 try:
     rows = session.execute(query)
