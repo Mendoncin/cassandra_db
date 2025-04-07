@@ -24,9 +24,9 @@ def popular_dados(duracao_segundos=60):
     grupo_atual = 1
 
     nota_grupo = {
-        "projeto1": round(random.uniform(4, 10), 2),
-        "projeto2": round(random.uniform(4, 10), 2),
-        "seminario": round(random.uniform(4, 10), 2)
+        "projeto1": round(random.uniform(4, 13), 2),
+        "projeto2": round(random.uniform(4, 13), 2),
+        "seminario": round(random.uniform(4, 13), 2)
     }
 
     while time.time() - inicio < duracao_segundos:
@@ -34,17 +34,25 @@ def popular_dados(duracao_segundos=60):
         matricula = f"2025{contador:04d}"
         prova = round(random.uniform(0, 12), 2)
 
+        if prova > 10:
+            prova = round(random.uniform(9, 10), 2)
+
         if contador % 4 == 0 and contador != 0:
             grupo_atual += 1
             nota_grupo = {
-                "projeto1": round(random.uniform(3, 12), 2),
-                "projeto2": round(random.uniform(3, 12), 2),
-                "seminario": round(random.uniform(3, 12), 2),
+                "projeto1": round(random.uniform(3, 13), 2),
+                "projeto2": round(random.uniform(3, 13), 2),
+                "seminario": round(random.uniform(3, 13), 2),
             }
 
+            if nota_grupo['projeto1'] > 10:
+                nota_grupo['projeto1'] = round(random.uniform(9, 10), 2)
+            if nota_grupo['projeto2'] > 10:
+                nota_grupo['projeto2'] = round(random.uniform(9, 10), 2)
+            if nota_grupo['seminario'] > 10:
+                nota_grupo['seminario'] = round(random.uniform(9, 10), 2)
+            
         media = calcular_media(prova, nota_grupo["projeto1"], nota_grupo["projeto2"], nota_grupo["seminario"])
-        if media > 10:
-            media = 10
         status = status_aluno(media)
 
         query = """
